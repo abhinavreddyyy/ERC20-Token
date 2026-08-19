@@ -60,4 +60,27 @@ contract OurTokenTest is Test {
         ourToken.transfer(receiver, amount);
         assertEq(ourToken.balanceOf(msg.sender), initialBalance - amount);
     }
+
+    function testInitialSupplyGoesToDeployer() public {
+        vm.prank(alice);
+        OurToken token = new OurToken(1000 ether);
+
+        assertEq(token.balanceOf(alice), 1000 ether);
+    }
+
+    function testName() public {
+        assertEq(ourToken.name(), "OurToken");
+    }
+
+    function testSymbol() public {
+        assertEq(ourToken.symbol(), "OT");
+    }
+
+    function testDecimals() public {
+        assertEq(ourToken.decimals(), 18);
+    }
+
+    function testTotalSupply() public {
+        assertEq(ourToken.totalSupply(), 1000 ether);
+    }
 }
